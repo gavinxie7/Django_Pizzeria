@@ -1,33 +1,28 @@
 {% extends "pizzas/base.html" %}
 
+{% block page_header %}
+    <h3>{{ pizza }}</h3>
+{% endblock page_header %}
+
 {% block content %}
 
-    <p>Pizza: {{ pizza }} </p>
+    {% for topping in toppings %}
+    <div class="card mb-3"> 
+        {{ topping.text|linebreaks }}
+    </div>
+    {% empty %}
+    ------------There are no toppings for this pizza yet.------------
+    {% endfor %}
 
-    <ul>
+    <h3>Comment Section:</h3>
 
-        {% for topping in toppings %}
-        <li>
-            <p>{{ topping.text|linebreaks }}</p>
-
-        </li>
-        {% empty %}
-            <li> There are no toppings for this pizza. </li>
-        {% endfor %}
-    </ul>
-    
-    <p> Comment Section: </p>
-
-    <ul>
-
-        {% for comment in comments %}
-        <li>
-            <p>{{ comment.text|linebreaks }}</p>
-        </li>
-        {% empty %}
-            <li> There are no comments for this pizza. </li>
-        {% endfor %}
-    </ul>
+    {% for comment in comments %}
+    <div class="card mb-3">
+        {{ comment.text|linebreaks }}
+    </div>
+    {% empty %}
+    ------------There are no comments for this pizza yet.------------
+    {% endfor %}
 
     <p>
         <a href="{% url 'pizzas:new_comment' pizza.id %}">Add new comment</a>
